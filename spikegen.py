@@ -119,7 +119,7 @@ def run_ablation_study(modes, res_steps, seeds, epochs=100):
                 spike_monitor.clear_recorded_data()
                 
                 acc = correct / total
-                # [수정] 정확도와 함께 Total Spikes 출력
+                # 정확도와 함께 Total Spikes 출력
                 print(f"[{mode} | Seed {seed}] Epoch {epoch+1}/{epochs} - Acc: {acc:.4f}, Total Spikes: {total_spikes}")
                 mode_history[epoch].append((acc, total_spikes))
                 

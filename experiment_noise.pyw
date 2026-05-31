@@ -7,7 +7,6 @@ def set_seed(seed):
     torch.cuda.manual_seed(seed); torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True; torch.backends.cudnn.benchmark = False
 
-# 노이즈를 15%로 상향
 class HfO2_Device: NL_LTP = 2.4; NOISE_SIGMA = 0.15 
 class RRAM_Linear_Universal(nn.Linear):
     def __init__(self, in_features, out_features, res_steps=100, mode='HfO2_Physics'):

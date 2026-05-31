@@ -11,7 +11,7 @@ def analyze_ep100_logs_per_file(log_dir="."):
         print(f"'{log_dir}' 경로에 output_***_ep100.log 파일이 없습니다.")
         return
 
-    print(f"총 {len(log_files)}개의 로그 파일을 '개별적'으로 분석합니다.\n")
+    print(f"총 {len(log_files)}개의 로그 파일을 분석합니다.\n")
 
     pattern = re.compile(r"\[(.*?)\s*\|\s*Seed\s*(\d+)\]\s*Epoch\s*(\d+)/\d+\s*-\s*Acc:\s*([\d\.]+)")
     target_modes = ['Ideal_FP32', 'Linear_Quant', 'HfO2_Physics', 'Noise_Aware']
@@ -53,8 +53,8 @@ def analyze_ep100_logs_per_file(log_dir="."):
             res_penalty = fp32_mean - quant_mean
             asym_penalty = quant_mean - physics_mean
             print(f"  - [기준] Ideal_FP32 평균     : {fp32_mean*100:.2f}%")
-            print(f"  - [격차] 해상도 한계 오차    : {res_penalty*100:+.2f}%p (FP32 - Quant)")
-            print(f"  - [격차] 비대칭성 오차       : {asym_penalty*100:+.2f}%p (Quant - Physics)")
+            print(f"  - [차이] 해상도 한계 오차    : {res_penalty*100:+.2f}%p (FP32 - Quant)")
+            print(f"  - [차이] 비대칭성 오차       : {asym_penalty*100:+.2f}%p (Quant - Physics)")
             print(f"  - [불안정성] FP32(σ {stats['Ideal_FP32']['std']*100:.2f}%) vs Physics(σ {stats['HfO2_Physics']['std']*100:.2f}%)")
         else:
             print("  - 데이터 없음")
@@ -69,7 +69,7 @@ def analyze_ep100_logs_per_file(log_dir="."):
                     acc_list = data[mode][final_epoch]
                     mean_val = np.mean(acc_list)
                     std_val = np.std(acc_list)
-                    print(f"  - {mode:15s} | 평균: {mean_val*100:.2f}% | 표준편차(에러바 두께): {std_val*100:.4f}%")
+                    print(f"  - {mode:15s} | 평균: {mean_val*100:.2f}% | 표준편차(Error Bar 두께): {std_val*100:.4f}%")
         else:
             print("  - 아직 Epoch 100 데이터가 기록되지 않았습니다.")
         print("\n")
